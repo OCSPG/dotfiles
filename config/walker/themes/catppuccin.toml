@@ -1,0 +1,49 @@
+[ui.anchors]
+bottom = false
+left = false
+right = false
+top = false
+
+[ui.window]
+h_align = "center"
+v_align = "center"
+
+[ui.window.box]
+h_align = "center"
+width = 400
+
+[ui.window.box.search]
+orientation = "horizontal"
+
+[ui.window.box.search.input]
+h_align = "fill"
+h_expand = true
+
+[ui.window.box.search.prompt]
+icon = "edit-find"
+pixel_size = 16
+
+[ui.window.box.search.clear]
+icon = "edit-clear"
+pixel_size = 16
+
+[ui.window.box.scroll]
+max_height = 300
+min_width = 400
+
+[ui.window.box.scroll.list]
+max_height = 300
+max_width = 400
+min_width = 400
+width = 400
+marker_color = "#b4befe"
+
+[ui.window.box.scroll.list.item]
+h_align = "fill"
+
+[ui.window.box.scroll.list.item.icon]
+pixel_size = 24
+
+[ui.window.box.scroll.list.item.activation_label]
+h_align = "end"
+width = 20

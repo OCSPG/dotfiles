@@ -1,0 +1,59 @@
+configuration {
+    font: "JetBrainsMono Nerd Font 13";
+    show-icons: true;
+    display-drun: "> ";
+}
+
+@theme "/dev/null"
+
+* {
+    background-color: #1e1e2e;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    width: 500px;
+    background-color: #1e1e2e;
+    border: 2px;
+    border-color: #b4befe;
+}
+
+element {
+    padding: 2px 8px;
+    text-color: #ffffff;
+    spacing: 8px;
+}
+
+element selected {
+    background-color: #313244;
+}
+
+element-icon {
+    size: 20px;
+}
+
+entry {
+    padding: 4px 8px;
+    text-color: #cdd6f4;
+}
+
+listview {
+    lines: 12;
+    padding: 4px 0;
+}
+
+mainbox {
+    padding: 4px;
+}
+
+inputbar {
+    children: [prompt, entry];
+}
+
+prompt {
+    padding: 4px 4px 4px 8px;
+    text-color: #b4befe;
+}

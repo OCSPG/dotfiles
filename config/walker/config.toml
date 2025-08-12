@@ -1,0 +1,43 @@
+[ui]
+width = 400
+height = 300
+margin = 0
+padding = 0
+border_radius = 5
+font_family = "JetBrainsMono Nerd Font"
+font_size = 14
+
+[search]
+placeholder = "Search..."
+case_sensitive = false
+fuzzy = true
+
+[modules.applications]
+enabled = true
+show_descriptions = true
+show_icons = true
+
+[modules.runner]
+enabled = true
+
+[modules.calculator]
+enabled = false
+
+[modules.clipboard]
+enabled = false
+
+[modules.websearch]
+enabled = false
+prefix = "!"
+engines = [
+    { prefix = "e", name = "Ecosia", url = "https://www.ecosia.org/search?q={}" }
+]
+
+[modules.commands]
+enabled = true
+
+[keybinds]
+quit = "Escape"
+select = "Return"
+up = "Up"
+down = "Down"

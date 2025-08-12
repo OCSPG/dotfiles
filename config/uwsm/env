@@ -1,0 +1,13 @@
+# Cursor and theming
+export HYPRCURSOR_THEME=Bibata-Modern-Ice
+export HYPRCURSOR_SIZE=24
+export QT_QPA_PLATFORMTHEME=qt6ct
+export QT_QPA_PLATFORMTHEME=qt6ct
+export GTK_BACKEND=wayland,x11,*
+export QT_QPA_PLATFORM=wayland;xcb
+export CLUTTER_BACKEND=wayland
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=Hyprland
+export PIPEWIRE_SESSION_MANAGER=wireplumber
+export SDL_VIDEODRIVER=wayland,x11

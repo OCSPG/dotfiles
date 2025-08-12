@@ -1,0 +1,171 @@
+/* Catppuccin Mocha theme for Walker */
+
+@define-color foreground #cdd6f4;
+@define-color background #1e1e2e;
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color lavender #b4befe;
+@define-color red #f38ba8;
+@define-color overlay0 #6c7086;
+
+#window,
+#box,
+#aiScroll,
+#aiList,
+#search,
+#password,
+#input,
+#prompt,
+#clear,
+#typeahead,
+#list,
+child,
+scrollbar,
+slider,
+#item,
+#text,
+#label,
+#bar,
+#sub,
+#activationlabel {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#window {
+  color: @foreground;
+  background: #1e1e2e;
+}
+
+#box {
+  border-radius: 5px;
+  background: #1e1e2e;
+  padding: 0px;
+  border: 2px solid @lavender;
+}
+
+#search {
+  background: #1e1e2e;
+  padding: 8px;
+  border-radius: 0px;
+  margin: 0px;
+  border-bottom: 1px solid @surface0;
+}
+
+#prompt {
+  margin: 0;
+  padding: 0;
+  width: 0;
+  opacity: 0;
+}
+
+#clear {
+  color: @foreground;
+  opacity: 0.8;
+}
+
+#input {
+  background: none;
+  color: @foreground;
+}
+
+#input placeholder {
+  color: @overlay0;
+  opacity: 0.8;
+}
+
+#typeahead {
+  color: @overlay0;
+}
+
+#list {
+  padding: 8px;
+  background: @background;
+}
+
+child {
+  padding: 6px 8px;
+  border-radius: 3px;
+  margin: 1px 0;
+}
+
+child:selected,
+child:hover {
+  background: @surface1;
+  color: @foreground;
+}
+
+#icon {
+  margin-right: 8px;
+}
+
+#label {
+  font-weight: bold;
+}
+
+#sub {
+  color: @overlay0;
+  font-size: 12px;
+}
+
+child:selected #sub,
+child:hover #sub {
+  color: @overlay0;
+}
+
+#activationlabel {
+  color: @foreground;
+}
+
+.activation #activationlabel {
+  color: @lavender;
+}
+
+.activation #text,
+.activation #icon,
+.activation #search {
+  opacity: 0.5;
+}
+
+/* Text highlighting for search matches */
+#label > span[background],
+#label span[background],
+span[background],
+#text > span[background],
+#text span[background],
+#label > span[color],
+#label span[color],
+span[color],
+#text > span[color],
+#text span[color] {
+  background: #f9e2af !important;
+  color: #1e1e2e !important;
+  font-weight: bold !important;
+}
+
+child:selected #label > span[background],
+child:selected #label span[background],
+child:selected span[background],
+child:selected #text > span[background],
+child:selected #text span[background],
+child:selected #label > span[color],
+child:selected #label span[color],
+child:selected span[color],
+child:selected #text > span[color],
+child:selected #text span[color],
+child:hover #label > span[background],
+child:hover #label span[background],
+child:hover span[background],
+child:hover #text > span[background],
+child:hover #text span[background],
+child:hover #label > span[color],
+child:hover #label span[color],
+child:hover span[color],
+child:hover #text > span[color],
+child:hover #text span[color] {
+  background: #f38ba8 !important;
+  color: #1e1e2e !important;
+  font-weight: bold !important;
+}

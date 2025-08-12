@@ -1,0 +1,64 @@
+# Hyprland Keybindings Reference
+# Format: Key Combination → Description
+
+SUPER + Q → Open terminal
+SUPER + C → Close active window
+SUPER + M → Stop uwsm session
+SUPER + T → Toggle floating window
+SUPER + F → Toggle fullscreen
+SUPER + R → Launch application menu
+SUPER + E → Open file manager
+SUPER + Space → File search
+SUPER + V → Clipboard history
+SUPER + CTRL + W → Web search (Ecosia)
+SUPER + K → Show keybindings
+SUPER + L → Lock screen
+SUPER + P → Color picker
+
+# Screenshots
+SUPER + SHIFT + S → Screenshot region
+
+# Power menu
+SUPER + SHIFT + E → Power/logout menu
+
+# Reload configs
+SUPER + CTRL + R → Reload Hyprland configs
+
+# Audio controls
+SUPER + CTRL + L → Toggle laptop audio
+
+# Window movement (WASD)
+SUPER + W → Move window up
+SUPER + A → Move window left
+SUPER + S → Move window down
+SUPER + D → Move window right
+
+# Focus movement
+SUPER + ALT + W → Focus window up
+SUPER + ALT + A → Focus window left
+SUPER + ALT + D → Focus window right
+
+# Workspaces
+SUPER + 1-9,0 → Switch to workspace 1-10
+SUPER + SHIFT + 1-9,0 → Move window to workspace 1-10
+SUPER + SHIFT + A → Previous workspace
+SUPER + SHIFT + D → Next workspace
+
+# Alt-tab
+ALT + Tab → Cycle through windows
+ALT + SHIFT + Tab → Cycle through windows (reverse)
+
+# Media keys
+XF86AudioRaiseVolume → Volume up
+XF86AudioLowerVolume → Volume down
+XF86AudioMute → Toggle mute
+XF86AudioPlay → Play/pause
+XF86AudioNext → Next track
+XF86AudioPrev → Previous track
+
+# Brightness
+XF86MonBrightnessUp → Brightness up
+XF86MonBrightnessDown → Brightness down
+
+# Overlay
+SHIFT + Tab → Toggle eww overlay

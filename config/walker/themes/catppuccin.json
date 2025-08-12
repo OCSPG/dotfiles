@@ -1,0 +1,54 @@
+{
+  "ui": {
+    "anchors": {
+      "bottom": false,
+      "left": false,
+      "right": false,
+      "top": false
+    },
+    "window": {
+      "h_align": "center",
+      "v_align": "center",
+      "box": {
+        "h_align": "center",
+        "width": 400,
+        "search": {
+          "orientation": "horizontal",
+          "input": {
+            "h_align": "fill",
+            "h_expand": true
+          },
+          "prompt": {
+            "icon": "edit-find",
+            "pixel_size": 16
+          },
+          "clear": {
+            "icon": "edit-clear",
+            "pixel_size": 16
+          }
+        },
+        "scroll": {
+          "max_height": 300,
+          "min_width": 400,
+          "list": {
+            "max_height": 300,
+            "max_width": 400,
+            "min_width": 400,
+            "width": 400,
+            "marker_color": "#b4befe",
+            "item": {
+              "h_align": "fill",
+              "icon": {
+                "pixel_size": 24
+              },
+              "activation_label": {
+                "h_align": "end",
+                "width": 20
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+# ZSH Plugins Information
+
+## System-installed plugins (via package manager):
+- zsh-autosuggestions: /usr/share/zsh/plugins/zsh-autosuggestions/
+- zsh-syntax-highlighting: /usr/share/zsh/plugins/zsh-syntax-highlighting/
+
+## Required packages:
+yay -S zsh-autosuggestions zsh-syntax-highlighting --noconfirm
+
+## Plugin configuration:
+Plugins are loaded in .zshrc with:
+- source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+- source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+## Additional tools referenced in .zshrc:
+- zoxide (smart cd replacement)
+- starship (prompt theme)

@@ -1,0 +1,272 @@
+#!/bin/bash
+
+# Clipboard Download Monitor
+# Monitors clipboard for download links and downloads them with aria2
+
+set -e
+
+# Configuration
+DOWNLOAD_DIR="$HOME/Downloads"
+ARIA2_CONNECTIONS=8
+CHECK_INTERVAL=1
+LOG_FILE="$HOME/.clipboard-downloader.log"
+PROCESSED_LINKS_FILE="$HOME/.clipboard-downloader-processed"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Global variables
+CURRENT_CLIPBOARD=""
+DOWNLOADING=false
+DOWNLOAD_PID=""
+
+# Function to print colored output
+print_colored() {
+    echo -e "${1}${2}${NC}"
+}
+
+# Function to log messages
+log_message() {
+    local message="$1"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "[$timestamp] $message" >> "$LOG_FILE"
+    print_colored "$BLUE" "[$timestamp] $message"
+}
+
+# Function to check dependencies
+check_dependencies() {
+    local missing_deps=()
+    
+    if ! command -v wl-paste &> /dev/null; then
+        missing_deps+=("wl-paste")
+    fi
+    
+    if ! command -v aria2c &> /dev/null; then
+        missing_deps+=("aria2c")
+    fi
+    
+    if [ ${#missing_deps[@]} -ne 0 ]; then
+        print_colored "$RED" "Missing dependencies: ${missing_deps[*]}"
+        print_colored "$YELLOW" "Install with: sudo pacman -S wl-clipboard aria2"
+        exit 1
+    fi
+}
+
+# Function to check if URL is a download link
+is_download_link() {
+    local url="$1"
+    
+    # Check if it's a valid URL
+    if ! echo "$url" | grep -qE '^https?://[^[:space:]]+$'; then
+        return 1
+    fi
+    
+    # Check for common download file extensions
+    if echo "$url" | grep -qiE '\.(zip|rar|7z|tar|gz|bz2|xz|deb|rpm|dmg|exe|msi|iso|img|pdf|doc|docx|xls|xlsx|ppt|pptx|mp3|mp4|mkv|avi|mov|flv|webm|m4a|flac|wav|jpg|jpeg|png|gif|webp|svg|apk|ipa|torrent)(\?.*)?$'; then
+        return 0
+    fi
+    
+    # Check for common file hosting domains
+    if echo "$url" | grep -qiE '(github\.com/.*/(releases|archive)|drive\.google\.com|dropbox\.com|mega\.nz|mediafire\.com|rapidgator\.net|uploaded\.net|zippyshare\.com|4shared\.com|solidfiles\.com)'; then
+        return 0
+    fi
+    
+    return 1
+}
+
+# Function to check if link was already processed
+is_already_processed() {
+    local url="$1"
+    if [ -f "$PROCESSED_LINKS_FILE" ]; then
+        grep -Fxq "$url" "$PROCESSED_LINKS_FILE"
+    else
+        return 1
+    fi
+}
+
+# Function to mark link as processed
+mark_as_processed() {
+    local url="$1"
+    echo "$url" >> "$PROCESSED_LINKS_FILE"
+}
+
+# Function to extract filename from URL
+extract_filename() {
+    local url="$1"
+    local filename=$(basename "$url" | sed 's/\?.*$//')
+    
+    # If no extension, try to get from Content-Disposition header
+    if [[ "$filename" != *.* ]]; then
+        filename=$(curl -sI "$url" | grep -i "content-disposition" | sed -n 's/.*filename="\([^"]*\)".*/\1/p' | head -1)
+        if [ -z "$filename" ]; then
+            filename="download_$(date +%s)"
+        fi
+    fi
+    
+    echo "$filename"
+}
+
+# Function to download file with aria2
+download_file() {
+    local url="$1"
+    local filename=$(extract_filename "$url")
+    
+    log_message "Starting download: $filename"
+    print_colored "$YELLOW" "Downloading: $filename"
+    
+    # Create download directory if it doesn't exist
+    mkdir -p "$DOWNLOAD_DIR"
+    
+    # Start aria2 download in background
+    (
+        cd "$DOWNLOAD_DIR"
+        aria2c \
+            -x "$ARIA2_CONNECTIONS" \
+            -s "$ARIA2_CONNECTIONS" \
+            --continue=true \
+            --max-tries=5 \
+            --retry-wait=3 \
+            --timeout=60 \
+            --connect-timeout=30 \
+            --summary-interval=10 \
+            --console-log-level=warn \
+            "$url" 2>&1 | while read -r line; do
+                if [[ "$line" =~ "Download complete" ]]; then
+                    log_message "Download completed: $filename"
+                    print_colored "$GREEN" "✓ Download completed: $filename"
+                fi
+            done
+    ) &
+    
+    DOWNLOAD_PID=$!
+    DOWNLOADING=true
+    
+    # Wait for download to complete
+    wait $DOWNLOAD_PID
+    DOWNLOADING=false
+    DOWNLOAD_PID=""
+    
+    # Mark as processed
+    mark_as_processed "$url"
+}
+
+# Function to handle shutdown
+cleanup() {
+    if [ -n "$DOWNLOAD_PID" ]; then
+        print_colored "$YELLOW" "Stopping current download..."
+        kill $DOWNLOAD_PID 2>/dev/null || true
+    fi
+    print_colored "$GREEN" "Clipboard downloader stopped."
+    exit 0
+}
+
+# Set up signal handlers
+trap cleanup SIGINT SIGTERM
+
+# Function to show status
+show_status() {
+    if [ "$DOWNLOADING" = true ]; then
+        print_colored "$YELLOW" "Status: Downloading (PID: $DOWNLOAD_PID)"
+    else
+        print_colored "$GREEN" "Status: Monitoring clipboard..."
+    fi
+}
+
+# Main monitoring loop
+main() {
+    print_colored "$BLUE" "Clipboard Download Monitor"
+    print_colored "$BLUE" "========================="
+    print_colored "$BLUE" "Download directory: $DOWNLOAD_DIR"
+    print_colored "$BLUE" "Aria2 connections: $ARIA2_CONNECTIONS"
+    print_colored "$BLUE" "Check interval: ${CHECK_INTERVAL}s"
+    print_colored "$BLUE" "Log file: $LOG_FILE"
+    echo
+    
+    check_dependencies
+    
+    # Create necessary files
+    touch "$PROCESSED_LINKS_FILE"
+    
+    log_message "Clipboard downloader started"
+    print_colored "$GREEN" "Monitoring clipboard for download links... (Ctrl+C to stop)"
+    
+    while true; do
+        # Get current clipboard content
+        NEW_CLIPBOARD=$(wl-paste 2>/dev/null || echo "")
+        
+        # Check if clipboard content changed
+        if [ "$NEW_CLIPBOARD" != "$CURRENT_CLIPBOARD" ] && [ -n "$NEW_CLIPBOARD" ]; then
+            CURRENT_CLIPBOARD="$NEW_CLIPBOARD"
+            
+            # Check if it's a download link
+            if is_download_link "$CURRENT_CLIPBOARD"; then
+                # Check if already processed
+                if is_already_processed "$CURRENT_CLIPBOARD"; then
+                    log_message "Link already processed, skipping: $CURRENT_CLIPBOARD"
+                elif [ "$DOWNLOADING" = true ]; then
+                    log_message "Download in progress, queuing: $CURRENT_CLIPBOARD"
+                    print_colored "$YELLOW" "⏳ Download in progress, will process when current download finishes"
+                else
+                    log_message "New download link detected: $CURRENT_CLIPBOARD"
+                    download_file "$CURRENT_CLIPBOARD"
+                fi
+            fi
+        fi
+        
+        sleep "$CHECK_INTERVAL"
+    done
+}
+
+# Show help
+show_help() {
+    echo "Clipboard Download Monitor"
+    echo "Usage: $0 [OPTIONS]"
+    echo
+    echo "Options:"
+    echo "  -d, --dir PATH       Download directory (default: $DOWNLOAD_DIR)"
+    echo "  -c, --connections N  Number of aria2 connections (default: $ARIA2_CONNECTIONS)"
+    echo "  -i, --interval N     Check interval in seconds (default: $CHECK_INTERVAL)"
+    echo "  -s, --status         Show current status"
+    echo "  -h, --help           Show this help"
+    echo
+    echo "The script monitors clipboard for download links and downloads them automatically."
+    echo "Only one download runs at a time, but uses multiple connections for acceleration."
+}
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -d|--dir)
+            DOWNLOAD_DIR="$2"
+            shift 2
+            ;;
+        -c|--connections)
+            ARIA2_CONNECTIONS="$2"
+            shift 2
+            ;;
+        -i|--interval)
+            CHECK_INTERVAL="$2"
+            shift 2
+            ;;
+        -s|--status)
+            show_status
+            exit 0
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Run main function
+main "$@"

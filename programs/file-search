@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# File search script using fd + fuzzel
+# Searches files in home directory and opens with default application
+
+# Search for files with different depths for different paths
+selected_file=$({
+    # Home directory - shallow search
+    fd --type f \
+        --exclude '.cache' \
+        --exclude '.local/share' \
+        --exclude '.steam' \
+        --exclude '.wine' \
+        --exclude 'node_modules' \
+        --exclude '.git' \
+        --exclude '__pycache__' \
+        --max-depth 4 \
+        . "$HOME"
+    
+    # Music folders - deep search
+    fd --type f \
+        --max-depth 12 \
+        . "/mnt/P3/Music"
+    
+    # Other /mnt paths - shallow search
+    fd --type f \
+        --max-depth 4 \
+        . /mnt --exclude 'P3/Music'
+} | awk -F'/' '{print $NF "\t" $0}' \
+    | sort \
+    | fuzzel --dmenu --prompt=" " --lines=20 --tabs=1 --config=/home/max/.config/fuzzel/fuzzel-files.ini \
+    | cut -f2)
+
+# If a file was selected, open it with the default application
+if [ -n "$selected_file" ]; then
+    # Use the full path directly since we're not modifying paths anymore
+    if [ -f "$selected_file" ]; then
+        xdg-open "$selected_file" &
+    fi
+fi

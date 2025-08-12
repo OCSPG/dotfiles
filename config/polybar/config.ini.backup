@@ -1,0 +1,134 @@
+[colors]
+background = #1e1e2e
+foreground = #cdd6f4
+lavender = #b4befe
+surface0 = #313244
+red = #f38ba8
+green = #a6e3a1
+yellow = #f9e2af
+blue = #89b4fa
+mauve = #cba6f7
+teal = #94e2d5
+peach = #fab387
+
+[bar/main]
+width = 100%
+height = 30pt
+radius = 0
+background = ${colors.background}
+foreground = ${colors.foreground}
+border-top-size = 0pt
+border-bottom-size = 0pt
+border-color = ${colors.lavender}
+padding-left = 0
+padding-right = 0
+padding-top = 3
+padding-bottom = 3
+module-margin = 1
+font-0 = "JetBrainsMono Nerd Font:size=15:weight=medium;3"
+modules-left = i3 
+modules-center = date
+modules-right = cpu memory filesystem pulseaudio network battery tray
+cursor-click = pointer
+enable-ipc = true
+
+[module/i3]
+type = internal/i3
+format = <label-state>
+index-sort = true
+pin-workspaces = true
+label-focused = %name%
+label-focused-background = ${colors.lavender}
+label-focused-foreground = ${colors.background}
+label-focused-padding = 1
+label-focused-font = 0
+label-unfocused = %name%
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-padding = 1
+label-visible = %name%
+label-visible-background = ${colors.surface0}
+label-visible-foreground = ${colors.foreground}
+label-visible-padding = 1
+label-urgent = %name%
+label-urgent-background = ${colors.red}
+label-urgent-foreground = ${colors.background}
+label-urgent-padding = 1
+
+[module/date]
+type = internal/date
+interval = 1
+date = %A, %B %d
+time = %H:%M:%S
+format-prefix = "󰃭 "
+format-prefix-foreground = ${colors.blue}
+label = %date% • %time%
+label-foreground = ${colors.foreground}
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "󰘚 "
+format-prefix-foreground = ${colors.red}
+label = %percentage:2%%
+warn-percentage = 80
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "󰍛 "
+format-prefix-foreground = ${colors.green}
+label = %percentage_used:2%%
+
+[module/filesystem]
+type = internal/fs
+mount-0 = /
+interval = 10
+format-mounted-prefix = "󰋊 "
+format-mounted-prefix-foreground = ${colors.yellow}
+label-mounted = %percentage_used%%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume-prefix = "󰕾 "
+format-volume-prefix-foreground = ${colors.mauve}
+format-volume = <label-volume>
+label-volume = %percentage%%
+format-muted-prefix = "󰖁 "
+format-muted-prefix-foreground = ${colors.red}
+label-muted = muted
+
+[module/network]
+type = internal/network
+interface = enp6s0
+interval = 3
+format-connected-prefix = "󰈀 "
+format-connected-prefix-foreground = ${colors.teal}
+label-connected = %downspeed%
+format-disconnected-prefix = "󰈂 "
+format-disconnected-prefix-foreground = ${colors.red}
+label-disconnected = offline
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 98
+format-charging-prefix = "󰂄 "
+format-charging-prefix-foreground = ${colors.green}
+label-charging = %percentage%%
+format-discharging-prefix = "󰁹 "
+format-discharging-prefix-foreground = ${colors.peach}
+label-discharging = %percentage%%
+format-full-prefix = "󰁹 "
+format-full-prefix-foreground = ${colors.green}
+label-full = %percentage%%
+
+[module/tray]
+type = internal/tray
+format-margin = 8px
+tray-spacing = 12px
+tray-size = 70%
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = false

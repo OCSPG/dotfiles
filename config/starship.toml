@@ -1,0 +1,19 @@
+# Starship configuration - Simple arrow prompt with Catppuccin colors
+
+add_newline = false
+
+[directory]
+style = "bold fg:#b4befe"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "bold fg:#a6e3a1"
+
+[git_status]
+style = "bold fg:#f9e2af"
+
+[character]
+success_symbol = "[❯](bold fg:#b4befe)"
+error_symbol = "[❯](bold fg:#f38ba8)"

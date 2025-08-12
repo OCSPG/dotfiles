@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=WhatsApp
+Comment=WhatsApp Web in app mode
+Exec=uwsm app -- thorium-browser-avx2 --app=https://web.whatsapp.com
+Icon=whatsapp
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging;
+MimeType=x-scheme-handler/whatsapp;
+StartupWMClass=Thorium-browser

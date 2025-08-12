@@ -1,0 +1,19 @@
+# Catppuccin Mocha + Lavender Accent
+font=JetBrainsMono Nerd Font 12
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#b4befe
+border-size=1
+border-radius=0
+padding=5
+margin=5
+default-timeout=3000
+ignore-timeout=1
+
+[urgency=high]
+border-color=#f38ba8
+default-timeout=0
+
+[urgency=critical]
+border-color=#f38ba8
+default-timeout=0

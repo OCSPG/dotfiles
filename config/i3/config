@@ -1,0 +1,225 @@
+# i3 config - Gaming optimized for minimal latency
+# NO COMPOSITOR - Raw performance
+
+# Catppuccin Mocha colors + Lavender accent
+set $rosewater #f5e0dc
+set $flamingo  #f2cdcd
+set $pink      #f5c2e7
+set $mauve     #cba6f7
+set $red       #f38ba8
+set $maroon    #eba0ac
+set $peach     #fab387
+set $yellow    #f9e2af
+set $green     #a6e3a1
+set $teal      #94e2d5
+set $sky       #89dceb
+set $sapphire  #74c7ec
+set $blue      #89b4fa
+set $lavender  #b4befe
+set $text      #cdd6f4
+set $subtext1  #bac2de
+set $subtext0  #a6adc8
+set $overlay2  #9399b2
+set $overlay1  #7f849c
+set $overlay0  #6c7086
+set $surface2  #585b70
+set $surface1  #45475a
+set $surface0  #313244
+set $base      #1e1e2e
+set $mantle    #181825
+set $crust     #11111b
+
+# Font (scaled for no fractional scaling)
+font pango:JetBrainsMono Nerd Font 14
+
+# Mod key (Super)
+set $mod Mod4
+
+# Terminal and launcher
+set $term kitty
+set $menu rofi -show drun -show-icons
+
+# Window colors          border    bg        text      indicator child_border
+client.focused          $lavender $base     $text     $lavender $lavender
+client.focused_inactive $surface0 $base     $text     $surface0 $surface0
+client.unfocused        $surface0 $base     $subtext1 $surface0 $surface0
+client.urgent           $red      $base     $text     $red      $red
+client.placeholder      $overlay0 $base     $text     $overlay0 $overlay0
+client.background       $base
+
+# Window borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# NO gaps for maximum screen real estate
+gaps inner 0
+gaps outer 0
+
+# Focus follows mouse enabled
+focus_follows_mouse yes
+mouse_warping output
+
+# Disable window titlebars completely
+for_window [class=".*"] border pixel 2
+
+# Gaming optimizations - no compositor, immediate mode
+exec --no-startup-id setxkbmap de        # German keyboard layout
+exec --no-startup-id xset r rate 250 25  # Fast key repeat
+exec --no-startup-id xset s off          # Disable screensaver
+exec --no-startup-id xset -dpms           # Disable power management
+# Simple mouse acceleration disable
+exec --no-startup-id xinput --set-prop "Razer Razer HyperPolling Wireless Dongle Mouse" "libinput Accel Profile Enabled" 0, 1
+
+# Essential autostart (minimal)
+# exec --no-startup-id "sleep 2; waybar --config ~/.config/waybar-i3/config --style ~/.config/waybar-i3/style.css"
+exec --no-startup-id dunst
+exec --no-startup-id nitrogen --restore
+
+# Key bindings
+
+# Terminal
+bindsym $mod+Return exec $term
+bindsym $mod+q exec $term
+
+# Kill focused window
+bindsym $mod+c kill
+
+# Application launcher
+bindsym $mod+r exec $menu
+
+# File manager
+bindsym $mod+e exec thunar
+
+# Reload all configs
+bindsym $mod+Shift+c exec /home/$USER/scripts/i3/reload-configs.sh
+
+# Exit i3
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
+
+# Lock screen (using i3lock)
+bindsym $mod+l exec i3lock -c 1e1e2e
+
+# Screenshots
+bindsym $mod+Shift+s exec --no-startup-id "maim -s | satty --filename - --fullscreen --output-filename ~/Pictures/screenshot-$(date +%Y%m%d_%H%M%S).png"
+
+# Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# Media controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# Audio profile switching (like Hyprland)
+bindsym $mod+ctrl+l exec --no-startup-id /home/$USER/scripts/audio/toggle-laptop-audio.sh
+
+# Window management
+
+# Change focus (WASD + Alt)
+bindsym $mod+Mod1+w focus up
+bindsym $mod+Mod1+a focus left
+bindsym $mod+Mod1+s focus down
+bindsym $mod+Mod1+d focus right
+
+# Move focused window (WASD)
+bindsym $mod+w move up
+bindsym $mod+a move left
+bindsym $mod+s move down
+bindsym $mod+d move right
+
+# Split orientation
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Container layout
+bindsym $mod+Tab layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+t floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Workspace management
+
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move window to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Quick workspace switching
+bindsym $mod+Shift+a workspace prev
+bindsym $mod+Shift+d workspace next
+
+# Mouse bindings
+bindsym --whole-window $mod+button2 kill
+floating_modifier $mod
+
+# Resize mode
+mode "resize" {
+    bindsym w resize shrink height 10 px or 10 ppt
+    bindsym a resize shrink width 10 px or 10 ppt
+    bindsym s resize grow height 10 px or 10 ppt
+    bindsym d resize grow width 10 px or 10 ppt
+    
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+bindsym $mod+Shift+r mode "resize"
+
+# Gaming window rules - maximize performance
+for_window [class="steam_app_.*"] fullscreen enable
+for_window [class="steam_app_.*"] focus
+for_window [class="gamescope"] fullscreen enable
+for_window [class="gamescope"] focus
+
+# Application-specific rules
+for_window [class="Steam"] floating enable
+for_window [class="steam"] floating enable
+for_window [title="Steam - News"] kill
+# for_window [class="Thunar"] floating enable, resize set 800 600
+# for_window [class="mpv"] floating enable
+# for_window [class="vlc"] floating enable
+
+bar {
+    status_command i3blocks -c ~/.config/i3blocks/config
+    position top
+    height 30
+    
+    colors {
+        background $base
+        statusline $text
+        separator  $overlay0
+        
+        focused_workspace  $lavender $lavender $crust
+        active_workspace   $surface0 $surface0 $text
+        inactive_workspace $base     $base     $text
+        urgent_workspace   $red      $red      $text
+        binding_mode       $yellow   $yellow   $crust
+    }
+}

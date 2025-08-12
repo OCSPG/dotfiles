@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Script to display Hyprland keybindings using walker
+# Reads from a static keybindings file
+
+# Read keybindings from text file
+grep -v '^#' /home/max/.config/hypr/keybindings.txt | \
+grep -v '^$' | \
+walker --dmenu --theme catppuccin -p 'Keybindings'

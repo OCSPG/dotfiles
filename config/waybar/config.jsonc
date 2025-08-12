@@ -1,0 +1,88 @@
+{
+	"layer": "top",
+	"position": "top",
+	"height": 14,
+	"spacing": 6,
+	"margin-top": 0,
+	"margin-bottom": 0,
+	"margin-left": 0,
+	"margin-right": 0,
+	"modules-left": [
+		"clock",
+		"custom/weather"
+	],
+	"modules-center": [
+		"hyprland/workspaces"
+	],
+	"modules-right": [
+		"custom/vpn",
+		"cpu",
+		"memory",
+		"wireplumber",
+		"tray"
+	],
+	"hyprland/workspaces": {
+		"disable-scroll": true,
+		"all-outputs": true,
+		"format": "{name}",
+		"format-icons": {
+			"active": "",
+			"default": ""
+		},
+		"persistent-workspaces": {
+			"1": [],
+			"2": [],
+			"3": [],
+			"4": [],
+			"5": [],
+			"6": [],
+			"7": [],
+			"8": [],
+			"9": [],
+			"10": []
+		}
+	},
+	"clock": {
+		"format": " {:%H:%M:%S %A, %d %B}",
+		"interval": 1,
+		"tooltip": false
+	},
+	"cpu": {
+		"format": " {usage}%",
+		"tooltip": false
+	},
+	"memory": {
+		"format": " {}%",
+		"tooltip": false
+	},
+	"wireplumber": {
+		"format": "{icon}  {volume}%",
+		"format-muted": "Muted",
+		"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+		"format-icons": [
+			"",
+			"",
+			""
+		],
+		"tooltip": false
+	},
+	"custom/weather": {
+		"exec": "/home/$USER/scripts/waybar/weather.sh",
+		"interval": 600,
+		"tooltip": false,
+		"format": "{}"
+	},
+	"custom/vpn": {
+		"exec": "/home/$USER/scripts/waybar/vpn.sh",
+		"interval": 5,
+		"tooltip": false,
+		"format": " {}",
+		"on-click": "/home/$USER/scripts/waybar/vpn.sh connect-de",
+		"on-click-right": "/home/$USER/scripts/waybar/vpn.sh connect-eu",
+		"on-click-middle": "/home/$USER/scripts/waybar/vpn.sh disconnect"
+	},
+	"tray": {
+		"icon-size": 16,
+		"spacing": 4
+	}
+}
