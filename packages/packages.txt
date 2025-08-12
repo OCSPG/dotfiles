@@ -76,8 +76,12 @@ foot
 
 # File Management
 thunar
+thunar-volman
 file-roller
 unrar
+gvfs
+gvfs-mtp
+udisks2
 
 # Fonts
 ttf-jetbrains-mono-nerd
