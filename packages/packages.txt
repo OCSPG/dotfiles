@@ -30,7 +30,6 @@ tokei
 procs
 bottom
 fzf
-delta
 tealdeer
 bandwhich
 dog
