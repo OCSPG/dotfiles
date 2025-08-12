@@ -12,6 +12,7 @@ xdg-desktop-portal-hyprland
 qt5-wayland
 qt6-wayland
 qt6ct
+nwg-look
 starship
 zsh
 zsh-autosuggestions
