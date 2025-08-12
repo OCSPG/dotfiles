@@ -11,3 +11,4 @@ export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_DESKTOP=Hyprland
 export PIPEWIRE_SESSION_MANAGER=wireplumber
 export SDL_VIDEODRIVER=wayland,x11
+export ELECTRON_OZONE_PLATFORM_HINT=auto
