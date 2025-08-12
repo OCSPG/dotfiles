@@ -65,12 +65,4 @@ dotfiles/
 └── install.sh        # Main installer
 ```
 
-## Testing
-
-A Docker environment is available for safe testing:
-```bash
-cd ~/Docker
-./create-arch-container.sh
-```
-
 All installers create backups of existing files before making changes.

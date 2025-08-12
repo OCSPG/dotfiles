@@ -79,6 +79,9 @@ thunar
 thunar-volman
 file-roller
 unrar
+zip
+unzip
+p7zip
 gvfs
 gvfs-mtp
 udisks2
@@ -116,6 +119,7 @@ nitrogen
 
 # Audio
 wireplumber
+pwvucontrol
 
 # Applications
 firefox
@@ -125,6 +129,9 @@ wlogout
 
 # System Tools
 update-grub
+cups
+samsung-unified-driver
+fastfetch
 
 # Network Management
 nmtui
