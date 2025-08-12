@@ -30,7 +30,7 @@ set $mantle    #181825
 set $crust     #11111b
 
 # Font (scaled for no fractional scaling)
-font pango:JetBrainsMono Nerd Font 14
+font pango:JetBrainsMono Nerd Font 16
 
 # Mod key (Super)
 set $mod Mod4
@@ -52,8 +52,8 @@ default_border pixel 2
 default_floating_border pixel 2
 
 # NO gaps for maximum screen real estate
-gaps inner 0
-gaps outer 0
+gaps inner 4
+gaps outer 4
 
 # Focus follows mouse enabled
 focus_follows_mouse yes
@@ -67,8 +67,6 @@ exec --no-startup-id setxkbmap de        # German keyboard layout
 exec --no-startup-id xset r rate 250 25  # Fast key repeat
 exec --no-startup-id xset s off          # Disable screensaver
 exec --no-startup-id xset -dpms           # Disable power management
-# Simple mouse acceleration disable (commented out - causing issues)
-# exec --no-startup-id xinput --set-prop "Razer Razer HyperPolling Wireless Dongle Mouse" "libinput Accel Profile Enabled" 0, 1
 
 # Essential autostart (minimal)
 exec --no-startup-id polybar

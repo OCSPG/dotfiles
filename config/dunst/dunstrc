@@ -1,6 +1,6 @@
 [global]
     # Font (scaled for no fractional scaling)
-    font = JetBrainsMono Nerd Font 15
+    font = JetBrainsMono Nerd Font 16
     
     # Positioning
     origin = top-right

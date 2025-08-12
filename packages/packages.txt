@@ -123,6 +123,7 @@ pwvucontrol
 
 # Applications
 firefox
+chromium
 
 # Session Management
 wlogout

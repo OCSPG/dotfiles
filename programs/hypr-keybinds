@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Script to display Hyprland keybindings using rofi instead of walker
-# Reads from a static keybindings file
-
-# Use rofi instead to avoid walker theme conflicts
-grep -v '^#' /home/max/.config/hypr/keybindings.txt | \
-grep -v '^$' | \
-rofi -dmenu -i -p 'Keybindings' -theme-str 'window { width: 60%; } listview { lines: 20; }'
