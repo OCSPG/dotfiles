@@ -126,6 +126,9 @@ wlogout
 # System Tools
 update-grub
 
+# Network Management
+nmtui
+
 # Default Applications
 gnome-text-editor
 image-roll
