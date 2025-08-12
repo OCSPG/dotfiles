@@ -101,4 +101,18 @@ if [[ "$plugins_needed" == true ]]; then
     print_info "  yay -S zsh-syntax-highlighting zsh-autosuggestions zoxide starship --noconfirm"
 fi
 
+# Set zsh as default shell if it's not already
+if [[ "$SHELL" != *"zsh" ]]; then
+    print_info "Setting zsh as default shell..."
+    if chsh -s /usr/bin/zsh; then
+        print_success "Default shell changed to zsh"
+        print_warning "Please log out and log back in for changes to take effect"
+    else
+        print_error "Failed to change default shell to zsh"
+        print_info "You can manually change it with: chsh -s /usr/bin/zsh"
+    fi
+else
+    print_success "zsh is already the default shell"
+fi
+
 print_info "Shell configuration installation complete"

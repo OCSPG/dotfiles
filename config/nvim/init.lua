@@ -698,17 +698,6 @@ require('lazy').setup({
           filetypes = { 'hyprlang' },
         },
         
-        cssls = {},
-        
-        jsonls = {
-          filetypes = { 'json', 'jsonc' },
-          settings = {
-            json = {
-              schemas = require('schemastore').json.schemas(),
-              validate = { enable = true },
-            },
-          },
-        },
       }
 
       -- Ensure the servers and tools above are installed
