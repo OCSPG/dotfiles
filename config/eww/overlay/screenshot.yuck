@@ -1,0 +1,45 @@
+;; Screenshot control module
+
+;; Screenshot settings
+(defvar annotations_enabled false)
+
+;; Screenshot controls widget
+(defwidget screenshot_controls []
+  (box :class "screenshot-widget" 
+       :orientation "h" 
+       :space-evenly true
+       :spacing 8
+    ;; Screen screenshot button
+    (button :class "screenshot-button" 
+            :tooltip "Screen Screenshot"
+            :onclick {annotations_enabled ? 
+              "eww -c ~/.config/eww close volume-overlay microphone-overlay screenshot-overlay media-overlay && sleep 0.1 && if [ \"$XDG_SESSION_TYPE\" = \"wayland\" ]; then grim - | satty -f - --copy-command 'wl-copy'; else maim | satty -f - --copy-command 'xclip -selection clipboard -t image/png'; fi" :
+              "eww -c ~/.config/eww close volume-overlay microphone-overlay screenshot-overlay media-overlay && sleep 0.1 && if [ \"$XDG_SESSION_TYPE\" = \"wayland\" ]; then grim - | wl-copy && notify-send 'Screenshot' 'Screen copied to clipboard'; else maim | xclip -selection clipboard -t image/png && notify-send 'Screenshot' 'Screen copied to clipboard'; fi"}
+      "")
+    
+    ;; Region screenshot button
+    (button :class "screenshot-button" 
+            :tooltip "Region Screenshot"
+            :onclick {annotations_enabled ?
+              "eww -c ~/.config/eww close volume-overlay microphone-overlay screenshot-overlay media-overlay && sleep 0.1 && if [ \"$XDG_SESSION_TYPE\" = \"wayland\" ]; then grim -g \"$(slurp)\" - | satty -f - --copy-command 'wl-copy'; else maim -s | satty -f - --copy-command 'xclip -selection clipboard -t image/png'; fi" :
+              "eww -c ~/.config/eww close volume-overlay microphone-overlay screenshot-overlay media-overlay && sleep 0.1 && if [ \"$XDG_SESSION_TYPE\" = \"wayland\" ]; then grim -g \"$(slurp)\" - | wl-copy && notify-send 'Screenshot' 'Region copied to clipboard'; else maim -s | xclip -selection clipboard -t image/png && notify-send 'Screenshot' 'Region copied to clipboard'; fi"}
+      "")
+    
+    ;; Annotation toggle
+    (button :class {annotations_enabled ? "annotation-toggle active" : "annotation-toggle"}
+            :tooltip "Toggle Annotations"
+            :onclick "eww -c ~/.config/eww update annotations_enabled=${!annotations_enabled}"
+      "")))
+
+;; Screenshot overlay window
+(defwindow screenshot-overlay
+  :monitor 0
+  :geometry (geometry :x "0px" 
+                     :y "4px" 
+                     :width "240px" 
+                     :height "40px"
+                     :anchor "bottom center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (screenshot_controls))

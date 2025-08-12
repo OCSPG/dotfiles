@@ -111,10 +111,10 @@ bindkey '^[[B' down-line-or-history
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 
-# Auto-start Hyprland on first login (TTY1 only)
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    exec uwsm start hyprland.desktop
-fi
+# Auto-start Hyprland on first login (TTY1 only) - DISABLED
+# if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+#     exec uwsm start hyprland.desktop
+# fi
 export PATH="$PATH:$HOME/Scripts/utils"
 alias todo="quick-claude TODO"
 alias done="quick-claude DONE"

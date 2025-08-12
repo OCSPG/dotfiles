@@ -1,0 +1,55 @@
+/* Screenshot Widget Styles */
+.screenshot-widget {
+  background-color: $base;
+  border-radius: 8px;
+  padding: 8px 12px;
+  border: 1px solid transparentize($overlay0, 0.5);
+  box-shadow: 0 4px 8px transparentize($crust, 0.2);
+}
+
+.screenshot-button {
+  font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+  background-color: transparentize($surface1, 0.3);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: $subtext0;
+  transition: all 0.2s ease;
+}
+
+.screenshot-button:hover {
+  background-color: transparentize($surface2, 0.3);
+  color: $text;
+}
+
+.screenshot-button:active {
+  background-color: $lavender;
+  color: $base;
+}
+
+.annotation-toggle {
+  font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+  background-color: transparentize($surface1, 0.3);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: $subtext0;
+  transition: all 0.2s ease;
+}
+
+.annotation-toggle:hover {
+  background-color: transparentize($surface2, 0.3);
+  color: $text;
+}
+
+.annotation-toggle.active {
+  background-color: $peach;
+  color: $base;
+  font-weight: bold;
+}
+
+.annotation-toggle.active:hover {
+  background-color: lighten($peach, 10%);
+}

@@ -1,0 +1,16 @@
+#!/bin/bash
+# Eww Overlay Toggle Script - All controls including sophisticated media
+
+CONFIG_DIR="$HOME/.config/eww"
+
+# Check if any overlay is open
+if eww -c "$CONFIG_DIR" active-windows | grep -q -E "volume-overlay|microphone-overlay|screenshot-overlay|media-overlay"; then
+    # Close all overlays
+    eww -c "$CONFIG_DIR" close volume-overlay microphone-overlay screenshot-overlay media-overlay
+else
+    # Open all overlays
+    eww -c "$CONFIG_DIR" open volume-overlay
+    eww -c "$CONFIG_DIR" open microphone-overlay
+    eww -c "$CONFIG_DIR" open screenshot-overlay
+    eww -c "$CONFIG_DIR" open media-overlay
+fi

@@ -1,0 +1,7 @@
+;; Main eww configuration
+
+;; Include overlay modules
+(include "./overlay/volume.yuck")
+(include "./overlay/microphone.yuck")
+(include "./overlay/screenshot.yuck")
+(include "./overlay/media.yuck")

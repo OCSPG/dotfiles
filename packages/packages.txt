@@ -1,35 +1,59 @@
+# Base System
 base
 base-devel
 linux
 linux-firmware
 linux-headers
+
+# Window Managers & Display
 ly
 uwsm
 hyprland
 i3-wm
 xorg-server
+xorg-xauth
+xorg-xinit
+xf86-input-libinput
 xdg-desktop-portal-hyprland
+eww
+
+# Qt/Wayland Support
 qt5-wayland
 qt6-wayland
 qt6ct
+
+# Theming & Appearance
 nwg-look
+bibata-cursor-theme
+catppuccin-gtk-theme-mocha
+papirus-icon-theme
+
+# Shell & Terminal
 starship
 zsh
 zsh-autosuggestions
 zsh-syntax-highlighting
 zoxide
+
+# Editors & Development
+git
 neovim
+
+# System Monitoring
 btop
+bottom
+gtop
+procs
+
+# Modern CLI Tools
 bat
 eza
 ripgrep
 sd
 fd
-du-dust
+dust
 hyperfine
 tokei
-procs
-bottom
 fzf
 tealdeer
 bandwhich
@@ -41,25 +65,38 @@ yq
 choose
 duf
 gping
-gtop
 lnav
+
+# Package Management
 yay
+
+# Terminal Emulators
 kitty
 foot
+
+# File Management
 thunar
 file-roller
 unrar
+
+# Fonts
 ttf-jetbrains-mono-nerd
 ttf-atkinson-hyperlegible
 otf-font-awesome
 noto-fonts-emoji
 noto-fonts-cjk
-papirus-icon-theme
+
+# Application Launchers & Bars
 rofi
 waybar
 polybar
+walker-bin
+
+# Notifications
 mako
 dunst
+
+# Screenshots & Media
 grim
 slurp
 swappy
@@ -67,12 +104,33 @@ satty
 wl-clipboard
 cliphist
 imagemagick
-firefox
+
+# Wallpapers & Backgrounds
 waypaper
-wireplumber
-wlogout
 hyprpaper
-walker-bin
-bibata-cursor-theme
-catppuccin-gtk-theme-mocha-revamped
+nitrogen
+
+# Audio
+wireplumber
+
+# Applications
+firefox
+
+# Session Management
+wlogout
+
+# System Tools
 update-grub
+
+# Default Applications
+gnome-text-editor
+image-roll
+zathura
+zathura-pdf-mupdf
+deadbeef
+celluloid
+g4music
+libreoffice-fresh
+discord
+bottles
+wine

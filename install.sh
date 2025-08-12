@@ -35,20 +35,11 @@ print_warning() {
 check_prerequisites() {
     print_info "Checking prerequisites..."
     
-    # Check if git is installed
-    if ! command -v git &> /dev/null; then
-        print_error "Git is not installed. Please install it first:"
-        echo "  sudo pacman -S git"
-        echo "  # or"
-        echo "  yay -S git"
-        exit 1
-    fi
-    
-    # Check if we're in a git repository (optional warning)
+    # Check if we're in a git repository (optional info)
     if [[ -d "$DOTFILES_DIR/.git" ]]; then
         print_success "Running from git repository"
     else
-        print_warning "Not running from a git repository"
+        print_info "Not running from a git repository"
     fi
     
     print_success "Prerequisites check passed"

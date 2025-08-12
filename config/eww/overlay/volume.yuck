@@ -1,0 +1,39 @@
+;; Volume control module
+
+;; Volume polling - fixed to properly sync with slider changes
+(defpoll volume_level :interval "200ms" :initial 50
+  "bash -c \"wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \\\"%d\\\", \\$2*100+0.5}'\"")
+(defpoll volume_muted :interval "200ms" :initial false
+  "bash -c \"wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo true || echo false\"")
+
+;; Volume control widget
+(defwidget volume_control []
+  (box :class "volume-widget" 
+       :orientation "v" 
+       :space-evenly false
+       :spacing 6
+    (label :class "volume-title" :text "Volume")
+    (label :class "volume-percentage" :text "${volume_level}%")
+    (scale :class "volume-slider"
+           :orientation "v" 
+           :flipped true
+           :value volume_level
+           :min 0 
+           :max 100
+           :onchange "bash -c 'if [ {} -ge 99 ]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%; else wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%; fi'")
+    (button :class {volume_muted == "true" ? "volume-button muted" : "volume-button"}
+            :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      (label :text {volume_muted == "true" ? "MUTE" : "VOL"}))))
+
+;; Volume overlay window
+(defwindow volume-overlay
+  :monitor 0
+  :geometry (geometry :x "4px" 
+                     :y "0px" 
+                     :width "60px" 
+                     :height "250px"
+                     :anchor "left center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (volume_control))

@@ -45,10 +45,48 @@ else
 	echo "    Warning: hypridle not found in PATH"
 fi
 
+# Restart Polybar if running
+echo "  • Polybar..."
+if pgrep -x polybar >/dev/null; then
+	pkill -x polybar
+	while pgrep -x polybar >/dev/null; do
+		sleep 0.1
+	done
+	polybar >/dev/null 2>&1 &
+fi
+
+# Restart Walker if running
+echo "  • Walker..."
+if pgrep -x walker >/dev/null; then
+	pkill -x walker
+	while pgrep -x walker >/dev/null; do
+		sleep 0.1
+	done
+fi
+
+# Restart EWW if running
+echo "  • EWW widgets..."
+if pgrep -x eww >/dev/null; then
+	eww reload >/dev/null 2>&1 || true
+fi
+
+# Restart Cliphist service if running
+echo "  • Cliphist clipboard history..."
+if pgrep -x cliphist >/dev/null; then
+	pkill -x cliphist
+	while pgrep -x cliphist >/dev/null; do
+		sleep 0.1
+	done
+	cliphist >/dev/null 2>&1 &
+fi
+
 # Reload Waypaper
 echo "  • Waypaper..."
-waypaper --random --fill fill >/dev/null 2>&1
-# Fuzzel doesn't need reloading (reads config on launch)
+if command -v waypaper >/dev/null 2>&1; then
+	waypaper --random --fill fill >/dev/null 2>&1
+fi
+
+# Note: Fuzzel, Rofi, Walker don't need reloading (read config on launch)
 
 echo "✅ All configurations reloaded!"
 

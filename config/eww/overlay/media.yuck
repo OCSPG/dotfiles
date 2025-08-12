@@ -1,0 +1,58 @@
+;; Media control module - Simple and working
+
+;; Media polling - basic info
+(defpoll media_title :interval "500ms" :initial "No media playing"
+  "playerctl metadata title 2>/dev/null || echo 'No media playing'")
+(defpoll media_artist :interval "500ms" :initial ""
+  "playerctl metadata artist 2>/dev/null || echo ''")
+(defpoll media_status :interval "500ms" :initial "Stopped"
+  "playerctl status 2>/dev/null || echo 'Stopped'")
+
+;; Simple media widget
+(defwidget media_player []
+  (box :class "media-widget"
+       :orientation "h"
+       :spacing 12
+    ;; Track info
+    (box :class "media-info"
+         :orientation "v"
+         :spacing 4
+         :hexpand true
+      (label :class "media-title"
+             :text {media_title != "No media playing" ? media_title : "No media"}
+             :wrap false
+             :xalign 0)
+      (label :class "media-artist"
+             :text {media_artist != "" ? media_artist : "Unknown Artist"}
+             :wrap false
+             :xalign 0))
+    
+    ;; Control buttons
+    (box :class "media-controls"
+         :orientation "h"
+         :spacing 8
+      (button :class "media-btn"
+              :tooltip "Previous"
+              :onclick "playerctl previous"
+        "")
+      (button :class {media_status == "Playing" ? "media-btn active" : "media-btn"}
+              :tooltip {media_status == "Playing" ? "Pause" : "Play"}
+              :onclick "playerctl play-pause"
+        {media_status == "Playing" ? "" : ""})
+      (button :class "media-btn"
+              :tooltip "Next"
+              :onclick "playerctl next"
+        ""))))
+
+;; Media overlay window
+(defwindow media-overlay
+  :monitor 0
+  :geometry (geometry :x "0px"
+                     :y "4px"
+                     :width "350px"
+                     :height "60px"
+                     :anchor "top center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (media_player))

@@ -67,13 +67,13 @@ exec --no-startup-id setxkbmap de        # German keyboard layout
 exec --no-startup-id xset r rate 250 25  # Fast key repeat
 exec --no-startup-id xset s off          # Disable screensaver
 exec --no-startup-id xset -dpms           # Disable power management
-# Simple mouse acceleration disable
-exec --no-startup-id xinput --set-prop "Razer Razer HyperPolling Wireless Dongle Mouse" "libinput Accel Profile Enabled" 0, 1
+# Simple mouse acceleration disable (commented out - causing issues)
+# exec --no-startup-id xinput --set-prop "Razer Razer HyperPolling Wireless Dongle Mouse" "libinput Accel Profile Enabled" 0, 1
 
 # Essential autostart (minimal)
-# exec --no-startup-id "sleep 2; waybar --config ~/.config/waybar-i3/config --style ~/.config/waybar-i3/style.css"
+exec --no-startup-id polybar
 exec --no-startup-id dunst
-exec --no-startup-id nitrogen --restore
+exec --no-startup-id nitrogen --set-zoom-fill ~/.config/hypr/catppuccin-solid.png
 
 # Key bindings
 
@@ -206,20 +206,7 @@ for_window [title="Steam - News"] kill
 # for_window [class="mpv"] floating enable
 # for_window [class="vlc"] floating enable
 
+# Disable i3bar completely - using polybar instead
 bar {
-    status_command i3blocks -c ~/.config/i3blocks/config
-    position top
-    height 30
-    
-    colors {
-        background $base
-        statusline $text
-        separator  $overlay0
-        
-        focused_workspace  $lavender $lavender $crust
-        active_workspace   $surface0 $surface0 $text
-        inactive_workspace $base     $base     $text
-        urgent_workspace   $red      $red      $text
-        binding_mode       $yellow   $yellow   $crust
-    }
+    mode invisible
 }

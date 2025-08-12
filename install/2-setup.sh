@@ -65,25 +65,18 @@ print_step "System Setup"
 print_info "Running essential system setup tasks"
 echo ""
 
-# Run setup scripts in order
-setup_scripts=(
-    "ly.sh"
-)
-
-for script in "${setup_scripts[@]}"; do
-    script_path="$SETUP_DIR/$script"
+# Run all setup scripts found in the setup directory
+for script_path in "$SETUP_DIR"/*.sh; do
+    [[ -f "$script_path" ]] || continue
     
-    if [[ -f "$script_path" ]]; then
-        print_info "Running setup: $script"
-        if bash "$script_path"; then
-            print_success "Completed: $script"
-        else
-            print_warning "Setup script $script returned non-zero exit code"
-        fi
-        echo ""
+    script=$(basename "$script_path")
+    print_info "Running setup: $script"
+    if bash "$script_path"; then
+        print_success "Completed: $script"
     else
-        print_warning "Setup script not found: $script"
+        print_warning "Setup script $script returned non-zero exit code"
     fi
+    echo ""
 done
 
 print_success "System setup completed!"

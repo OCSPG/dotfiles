@@ -11,7 +11,15 @@ echo "🔄 Reloading i3 configurations..."
 echo "  • i3 window manager..."
 i3-msg reload
 
-# i3bar is handled by i3 reload automatically
+# Restart Polybar if running (separate from i3bar)
+echo "  • Polybar..."
+if pgrep -x polybar >/dev/null; then
+	pkill -x polybar
+	while pgrep -x polybar >/dev/null; do
+		sleep 0.1
+	done
+	polybar >/dev/null 2>&1 &
+fi
 
 # Restart Dunst notifications with improved process management
 echo "  • Dunst notifications..."
@@ -24,9 +32,13 @@ if pgrep -x dunst >/dev/null; then
 fi
 dunst >/dev/null 2>&1 &
 
-# Set wallpaper
+# Set wallpaper (try both nitrogen and waypaper)
 echo "  • Setting wallpaper..."
-nitrogen --restore >/dev/null 2>&1
+if command -v nitrogen >/dev/null 2>&1; then
+	nitrogen --restore >/dev/null 2>&1
+elif command -v waypaper >/dev/null 2>&1; then
+	waypaper --random --fill fill >/dev/null 2>&1
+fi
 
 echo "✅ All configurations reloaded!"
 

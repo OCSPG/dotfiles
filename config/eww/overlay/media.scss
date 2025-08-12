@@ -1,0 +1,54 @@
+/* Media Widget Styles - Simple and working */
+
+.media-widget {
+  background-color: $base;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid transparentize($overlay0, 0.5);
+  box-shadow: 0 4px 8px transparentize($crust, 0.2);
+}
+
+.media-info {
+}
+
+.media-title {
+  font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+  color: $text;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.media-artist {
+  font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+  color: $lavender;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.media-controls {
+}
+
+.media-btn {
+  font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
+  background-color: transparentize($surface1, 0.3);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: $subtext0;
+  transition: all 0.2s ease;
+}
+
+.media-btn:hover {
+  background-color: transparentize($surface2, 0.3);
+  color: $text;
+}
+
+.media-btn.active {
+  background-color: $green;
+  color: $base;
+}
+
+.media-btn.active:hover {
+  background-color: lighten($green, 10%);
+}
