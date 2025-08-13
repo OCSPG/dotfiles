@@ -9,10 +9,12 @@ linux-headers
 ly
 uwsm
 hyprland
+hyprpolkitagent
 i3-wm
 xorg-server
 xorg-xauth
 xorg-xinit
+xorg-xinput
 xf86-input-libinput
 xdg-desktop-portal-hyprland
 eww
