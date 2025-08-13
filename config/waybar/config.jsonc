@@ -66,13 +66,13 @@
 		"tooltip": false
 	},
 	"custom/vpn": {
-		"exec": "/home/$USER/Projects/dotfiles/scripts/waybar/vpn.sh",
+		"exec": "/home/$USER/scripts/waybar/vpn.sh",
 		"interval": 5,
 		"tooltip": false,
 		"format": " {}",
-		"on-click": "/home/$USER/Projects/dotfiles/scripts/waybar/vpn.sh connect-de",
-		"on-click-right": "/home/$USER/Projects/dotfiles/scripts/waybar/vpn.sh connect-eu",
-		"on-click-middle": "/home/$USER/Projects/dotfiles/scripts/waybar/vpn.sh disconnect"
+		"on-click": "/home/$USER/scripts/waybar/vpn.sh connect-de",
+		"on-click-right": "/home/$USER/scripts/waybar/vpn.sh connect-eu",
+		"on-click-middle": "/home/$USER/scripts/waybar/vpn.sh disconnect"
 	},
 	"tray": {
 		"icon-size": 16,

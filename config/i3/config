@@ -72,7 +72,7 @@ exec --no-startup-id xset -dpms           # Disable power management
 exec --no-startup-id polybar
 exec --no-startup-id dunst
 exec --no-startup-id nitrogen --set-zoom-fill ~/.config/hypr/catppuccin-solid.png
-
+exec --no-startup-id /home/$USER/scripts/i3/disable-mouse-accel.sh
 # Key bindings
 
 # Terminal

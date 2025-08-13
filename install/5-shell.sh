@@ -1,118 +1,118 @@
 #!/usr/bin/env bash
 
 # Shell configuration installer
-set -e
 
 # Get the directory of the main dotfiles
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SHELL_SRC="$DOTFILES_DIR/shell"
 HOME_DEST="$HOME"
 
-# Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-print_info() {
-    echo -e "  ${NC}$1${NC}"
-}
-
-print_success() {
-    echo -e "  ${GREEN}✓${NC} $1"
-}
-
-print_error() {
-    echo -e "  ${RED}✗${NC} $1"
-}
-
-print_warning() {
-    echo -e "  ${YELLOW}!${NC} $1"
-}
-
 # Create backup of existing file
 backup_if_exists() {
     local file=$1
     if [[ -e "$file" ]]; then
         local backup="${file}.backup.$(date +%Y%m%d_%H%M%S)"
-        print_warning "Backing up existing $(basename "$file") to $(basename "$backup")"
+        echo "  ! Backing up existing $(basename "$file") to $(basename "$backup")"
         mv "$file" "$backup"
     fi
 }
 
 # Install shell files
-print_info "Installing shell configuration files..."
+echo "==> Installing shell configuration files..."
+echo ""
+sleep 1
 
 # Install .zshrc
 if [[ -f "$SHELL_SRC/.zshrc" ]]; then
     backup_if_exists "$HOME_DEST/.zshrc"
     if cp "$SHELL_SRC/.zshrc" "$HOME_DEST/"; then
-        print_success "Installed .zshrc"
+        echo "  ✓ Installed .zshrc"
     else
-        print_error "Failed to install .zshrc"
+        echo "  ✗ Failed to install .zshrc"
     fi
 else
-    print_error ".zshrc not found in source"
+    echo "  ✗ .zshrc not found in source"
 fi
 
 # Install .bashrc
 if [[ -f "$SHELL_SRC/.bashrc" ]]; then
     backup_if_exists "$HOME_DEST/.bashrc"
     if cp "$SHELL_SRC/.bashrc" "$HOME_DEST/"; then
-        print_success "Installed .bashrc"
+        echo "  ✓ Installed .bashrc"
     else
-        print_error "Failed to install .bashrc"
+        echo "  ✗ Failed to install .bashrc"
     fi
 else
-    print_warning ".bashrc not found in source (optional)"
+    echo "  ! .bashrc not found in source (optional)"
 fi
+echo ""
+sleep 1
 
 # Check for required ZSH plugins
-print_info "Checking ZSH plugin dependencies..."
+clear
+echo "==> Checking ZSH plugin dependencies..."
+echo ""
 
-plugins_needed=false
+missing_packages=()
+
 if [[ ! -d "/usr/share/zsh/plugins/zsh-syntax-highlighting" ]]; then
-    print_warning "zsh-syntax-highlighting not installed"
-    plugins_needed=true
+    echo "  ! zsh-syntax-highlighting not installed"
+    missing_packages+=("zsh-syntax-highlighting")
+else
+    echo "  ✓ zsh-syntax-highlighting is installed"
 fi
 
 if [[ ! -d "/usr/share/zsh/plugins/zsh-autosuggestions" ]]; then
-    print_warning "zsh-autosuggestions not installed"
-    plugins_needed=true
+    echo "  ! zsh-autosuggestions not installed"
+    missing_packages+=("zsh-autosuggestions")
+else
+    echo "  ✓ zsh-autosuggestions is installed"
 fi
 
 if command -v zoxide >/dev/null 2>&1; then
-    print_success "zoxide is installed"
+    echo "  ✓ zoxide is installed"
 else
-    print_warning "zoxide not installed"
-    plugins_needed=true
+    echo "  ! zoxide not installed"
+    missing_packages+=("zoxide")
 fi
 
 if command -v starship >/dev/null 2>&1; then
-    print_success "starship is installed"
+    echo "  ✓ starship is installed"
 else
-    print_warning "starship not installed"
-    plugins_needed=true
+    echo "  ! starship not installed"
+    missing_packages+=("starship")
 fi
 
-if [[ "$plugins_needed" == true ]]; then
-    print_info ""
-    print_info "To install missing dependencies, run:"
-    print_info "  yay -S zsh-syntax-highlighting zsh-autosuggestions zoxide starship --noconfirm"
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+    echo ""
+    echo "  [INFO] Installing missing dependencies..."
+    sleep 1
+    if yay -S "${missing_packages[@]}" --noconfirm --needed; then
+        echo "  ✓ Dependencies installed successfully"
+    else
+        echo "  ✗ Failed to install some dependencies"
+    fi
 fi
+echo ""
+sleep 2
 
 # Set zsh as default shell if it's not already
+clear
+echo "==> Setting default shell..."
+echo ""
 if [[ "$SHELL" != *"zsh" ]]; then
-    print_info "Setting zsh as default shell..."
+    echo "  [INFO] Setting zsh as default shell..."
     if chsh -s /usr/bin/zsh; then
-        print_success "Default shell changed to zsh"
-        print_warning "Please log out and log back in for changes to take effect"
+        echo "  ✓ Default shell changed to zsh"
+        echo "  ! Please log out and log back in for changes to take effect"
     else
-        print_error "Failed to change default shell to zsh"
-        print_info "You can manually change it with: chsh -s /usr/bin/zsh"
+        echo "  ✗ Failed to change default shell to zsh"
+        echo "  [INFO] You can manually change it with: chsh -s /usr/bin/zsh"
     fi
 else
-    print_success "zsh is already the default shell"
+    echo "  ✓ zsh is already the default shell"
 fi
+echo ""
+sleep 1
 
-print_info "Shell configuration installation complete"
+echo "  [INFO] Shell configuration installation complete"
