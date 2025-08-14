@@ -133,7 +133,6 @@ wlogout
 # System Tools
 update-grub
 cups
-samsung-unified-driver
 fastfetch
 
 # Network Management
