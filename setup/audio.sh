@@ -52,9 +52,9 @@ echo "[INFO] Adding user to audio group..."
 sudo usermod -a -G audio $USER
 
 # Install audio control tools if not present
-if ! pacman -Qi pavucontrol &> /dev/null; then
-    echo "[INFO] Installing pavucontrol for audio management..."
-    yay -S pavucontrol --noconfirm --needed
+if ! pacman -Qi pwvucontrol &> /dev/null; then
+    echo "[INFO] Installing pwvucontrol for audio management..."
+    yay -S pwvucontrol --noconfirm --needed
 fi
 
 # Check for bluetooth audio support
