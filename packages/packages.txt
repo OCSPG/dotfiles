@@ -134,6 +134,7 @@ wlogout
 update-grub
 cups
 fastfetch
+ufw
 
 # Network Management
 nmtui

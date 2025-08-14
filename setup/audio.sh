@@ -57,15 +57,6 @@ if ! pacman -Qi pwvucontrol &> /dev/null; then
     yay -S pwvucontrol --noconfirm --needed
 fi
 
-# Check for bluetooth audio support
-if pacman -Qi bluez &> /dev/null; then
-    if ! pacman -Qi pipewire-pulse &> /dev/null; then
-        echo "[INFO] Installing bluetooth audio support..."
-        yay -S pipewire-pulse --noconfirm --needed
-    fi
-    echo "[INFO] Bluetooth audio support is configured"
-fi
-
 # Enable real-time scheduling for audio (reduces latency)
 if ! grep -q "@audio" /etc/security/limits.conf 2>/dev/null; then
     echo "[INFO] Configuring real-time audio priorities..."

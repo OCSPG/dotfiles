@@ -51,8 +51,6 @@ x-scheme-handler/discord-1345366770436800533=discord-1345366770436800533.desktop
 x-scheme-handler/discord-1223291656732934377=discord-1223291656732934377.desktop
 application/vnd.sqlite3=libreoffice-base.desktop
 
-[Removed Associations]
-
 [Added Associations]
 text/plain=org.gnome.TextEditor.desktop;kitty.desktop;nvim.desktop;
 text/x-readme=org.gnome.TextEditor.desktop;kitty.desktop;nvim.desktop;

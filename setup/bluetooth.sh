@@ -34,11 +34,6 @@ sudo systemctl start bluetooth.service
 echo "[INFO] Adding user to lp group..."
 sudo usermod -a -G lp $USER
 
-# Enable auto power-on for bluetooth
-echo "[INFO] Configuring bluetooth to auto power-on..."
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/' /etc/bluetooth/main.conf 2>/dev/null || \
-    echo "AutoEnable=true" | sudo tee -a /etc/bluetooth/main.conf > /dev/null
-
 echo ""
 echo "[INFO] Bluetooth setup complete!"
 echo "[INFO] You can manage bluetooth devices using blueman-applet or bluetoothctl"

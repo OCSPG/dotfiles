@@ -55,7 +55,7 @@
 		"tooltip": false
 	},
 	"wireplumber": {
-		"format": "{icon}  {volume}%",
+		"format": "{icon} {volume}%",
 		"format-muted": "Muted",
 		"on-click": "pwvucontrol",
 		"format-icons": [

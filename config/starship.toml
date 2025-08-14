@@ -8,7 +8,7 @@ truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
-symbol = " "
+symbol = " "
 style = "bold fg:#a6e3a1"
 
 [git_status]
